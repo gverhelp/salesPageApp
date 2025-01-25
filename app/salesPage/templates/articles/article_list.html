@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+
+{% block title %}Liste des Articles{% endblock %}
+
+{% block content %}
+    <h1>Articles</h1>
+    
+    {% for article in articles %}
+        <div class="article">
+            <h2>{{ article.title }}</h2>
+            <p>{{ article.content }}</p>
+            <p><strong>Prix :</strong> {{ article.price }} €</p>
+            
+            {% if article.images.all %}
+                <img src="{{ article.images.first.image.url }}" alt="{{ article.title }}" style="max-width: 300px;">
+            {% endif %}
+            
+            <a href="{% url 'article_detail' article.id %}">Lire plus</a>
+        </div>
+    {% empty %}
+        <p>Aucun article disponible.</p>
+    {% endfor %}
+{% endblock %}
