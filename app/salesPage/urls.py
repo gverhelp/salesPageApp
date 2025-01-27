@@ -17,10 +17,13 @@ Including another URLconf
 from django.conf import settings
 from django.conf.urls.static import static
 from django.urls import path
-from salesPage.views import home, article_list, article_detail
+from salesPage.views import home, article_list, article_detail, article_delete, article_update, article_create
 
 urlpatterns = [
     path('', home, name='home'),
     path('articles/', article_list, name='article_list'),
     path('articles/<int:article_id>/', article_detail, name='article_detail'),
+    path('articles/<int:article_id>/delete/', article_delete, name='article_delete'),
+    path('articles/<int:article_id>/update/', article_update, name='article_update'),
+    path('articles/create/', article_create, name='article_create'),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

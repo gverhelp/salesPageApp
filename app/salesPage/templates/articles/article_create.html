@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+
+{% block title %}Créer un Article{% endblock %}
+
+{% block content %}
+    <h1>Créer un nouvel article</h1>
+    <form method="POST" enctype="multipart/form-data">
+        {% csrf_token %}
+    
+        <!-- ✅ Formulaire de l'article -->
+        {{ article_form.as_p }}
+    
+        <!-- ✅ Formulaire pour les images -->
+        <label for="id_image">Ajouter des images :</label>
+        <input type="file" name="image" id="id_image" multiple>
+    
+        <button type="submit">Créer l'article</button>
+    </form>
+    <a href="{% url 'article_list' %}">Retour à la liste</a>
+{% endblock %}
