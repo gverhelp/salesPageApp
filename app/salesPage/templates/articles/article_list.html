@@ -2,14 +2,41 @@
 {% block title %}Articles{% endblock %}
 
 {% block content %}
-<h1 class="text-center mb-4">Liste des articles</h1>
+<h1 class="text-center mb-4 fw-semibold border-bottom pb-2">
+    Mes articles en vente
+</h1>
 
 <div class="row">
     {% for article in articles %}
         <div class="col d-flex align-items-center justify-content-center pb-5">
-            <div class="card shadow-sm bg-body-tertiary" style="width: 25rem;">
+            <div class="card shadow-sm bg-body-tertiary overflow-hidden" style="width: 25rem;">
                 {% if article.images.all %}
-                    <img src="{{ article.images.first.image.url }}" class="card-img-top" style="height: 20rem; width: 100%; object-fit: cover;" alt="{{ article.title }}">
+                    <div id="carousel{{ article.id }}" class="carousel slide" data-bs-ride="carousel" data-bs-interval="3000" data-bs-pause="hover">
+                        <div class="carousel-indicators">
+                            {% if article.images.all.count > 1 %}
+                            {% for image in article.images.all %}
+                                <button type="button" data-bs-target="#carousel{{ article.id }}" data-bs-slide-to="{{ forloop.counter0 }}" class="{% if forloop.first %}active{% endif %}" aria-label="Slide {{ forloop.counter }}"></button>
+                            {% endfor %}
+                            {% endif %}
+                        </div>
+                        <div class="carousel-inner">
+                            {% for image in article.images.all %}
+                                <div class="carousel-item {% if forloop.first %}active{% endif %}">
+                                    <img src="{{ image.image.url }}" class="d-block w-100" style="height: 20rem; object-fit: cover;" alt="{{ article.title }}">
+                                </div>
+                            {% endfor %}
+                        </div>
+                        {% if article.images.all.count > 1 %}
+                            <button class="carousel-control-prev" type="button" data-bs-target="#carousel{{ article.id }}" data-bs-slide="prev">
+                                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                                <span class="visually-hidden">Previous</span>
+                            </button>
+                            <button class="carousel-control-next" type="button" data-bs-target="#carousel{{ article.id }}" data-bs-slide="next">
+                                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                                <span class="visually-hidden">Next</span>
+                            </button>
+                        {% endif %}
+                    </div>
                 {% else %}
                     <img src="https://placehold.co/500x400?text=No+image" class="card-img-top" alt="Image par défaut">
                 {% endif %}
