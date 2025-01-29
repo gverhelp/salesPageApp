@@ -1,23 +1,27 @@
 {% extends 'base.html' %}
-
-{% block title %} Liste des articles {% endblock %}
+{% block title %}Articles{% endblock %}
 
 {% block content %}
-    <h1>Articles</h1>
-    
+<h1 class="text-center mb-4">Liste des articles</h1>
+
+<div class="row">
     {% for article in articles %}
-        <div class="article">
-            <h2>{{ article.title }}</h2>
-            <p>{{ article.content }}</p>
-            <p><strong>Prix :</strong> {{ article.price }} €</p>
-            
-            {% if article.images.all %}
-                <img src="{{ article.images.first.image.url }}" alt="{{ article.title }}" style="max-width: 300px;">
-            {% endif %}
-            
-            <a href="{% url 'article_detail' article.id %}">Lire plus</a>
+        <div class="col d-flex align-items-center justify-content-center pb-5">
+            <div class="card shadow-sm bg-body-tertiary" style="width: 25rem;">
+                {% if article.images.all %}
+                    <img src="{{ article.images.first.image.url }}" class="card-img-top" style="height: 20rem; width: 100%; object-fit: cover;" alt="{{ article.title }}">
+                {% else %}
+                    <img src="https://placehold.co/500x400?text=No+image" class="card-img-top" alt="Image par défaut">
+                {% endif %}
+                <div class="card-body">
+                    <h5 class="card-title text-break">{{ article.title }}</h5>
+                    <p class="card-text overflow-scroll" style="height: 3rem;">{{ article.content }}</p>
+                    <p class="fw-bold">Prix : {{ article.price }} €</p>
+                    <a href="{% url 'article_detail' article.id %}" class="btn btn-primary">Voir plus</a>
+                </div>
+            </div>
         </div>
-    {% empty %}
-        <p>Aucun article disponible.</p>
     {% endfor %}
+</div>
+
 {% endblock %}
