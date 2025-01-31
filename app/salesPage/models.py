@@ -18,3 +18,12 @@ class ArticleImage(models.Model):
 
     def __str__(self):
         return f"Image de {self.article.title}"
+    
+    
+class Order(models.Model):
+    email = models.EmailField()
+    message = models.TextField()
+    article = models.ForeignKey(Article, on_delete=models.CASCADE)
+    
+    def __str__(self):
+        return f"Commande de {self.article.title} par {self.email}"

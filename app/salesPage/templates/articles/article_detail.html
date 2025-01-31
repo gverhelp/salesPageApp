@@ -3,14 +3,130 @@
 {% block title %}{{ article.title }}{% endblock %}
 
 {% block content %}
-<div>
-    <h1>{{ article.title }}</h1>
-    <p>{{ article.content }}</p>
-    <p><strong>Prix :</strong> {{ article.price }} €</p>
+<div class="d-flex justify-content-start mb-3" style="margin-left: 12.5%">
+    <a href="{% url 'article_list' %}" class="btn btn-outline-primary">
+        ← Retour aux articles
+    </a>
+</div>
+<div class="d-flex justify-content-evenly">
+    <div class="d-flex justify-content-center align-items-center">
+        {% if prev_article %}
+            <a href="{% url 'article_detail' prev_article.id %}">
+                <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" fill="currentColor" class="bi bi-arrow-left-circle" viewBox="0 0 16 16">
+                    <path fill-rule="evenodd" d="M1 8a7 7 0 1 0 14 0A7 7 0 0 0 1 8m15 0A8 8 0 1 1 0 8a8 8 0 0 1 16 0m-4.5-.5a.5.5 0 0 1 0 1H5.707l2.147 2.146a.5.5 0 0 1-.708.708l-3-3a.5.5 0 0 1 0-.708l3-3a.5.5 0 1 1 .708.708L5.707 7.5z"/>
+                </svg>
+            </a>
+        {% endif %}
+    </div>
+    <div class="card mb-3 overflow-hidden" style="width: 75%;">
+        <div class="row g-0">
+          <div class="col-md-8 border-end">
+            {% if article.images.all %}
+            <div id="carousel{{ article.id }}" class="carousel slide" data-bs-ride="carousel" data-bs-interval="3000" data-bs-pause="hover">
+                <div class="carousel-indicators">
+                    {% if article.images.all.count > 1 %}
+                    {% for image in article.images.all %}
+                        <button type="button" data-bs-target="#carousel{{ article.id }}" data-bs-slide-to="{{ forloop.counter0 }}" class="{% if forloop.first %}active{% endif %}" aria-label="Slide {{ forloop.counter }}"></button>
+                    {% endfor %}
+                    {% endif %}
+                </div>
+                <div class="carousel-inner">
+                    {% for image in article.images.all %}
+                        <div class="carousel-item {% if forloop.first %}active{% endif %}">
+                            <img src="{{ image.image.url }}" class="d-block w-100" style="height: 50rem; object-fit: cover;" alt="{{ article.title }}">
+                        </div>
+                    {% endfor %}
+                </div>
+                {% if article.images.all.count > 1 %}
+                    <button class="carousel-control-prev" type="button" data-bs-target="#carousel{{ article.id }}" data-bs-slide="prev">
+                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                        <span class="visually-hidden">Previous</span>
+                    </button>
+                    <button class="carousel-control-next" type="button" data-bs-target="#carousel{{ article.id }}" data-bs-slide="next">
+                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                        <span class="visually-hidden">Next</span>
+                    </button>
+                {% endif %}
+            </div>
+            {% else %}
+                <img src="https://placehold.co/300x400?text=No+image" class="d-block w-100" style="height: 50rem; object-fit: cover;" alt="Image par défaut">
+            {% endif %}
+            </div>
+            <div class="col-md-4 d-flex align-items-center">
+                <div class="card-body">
+                    <h5 class="card-title text-break">{{ article.title }}</h5>
+                    <p class="card-text text-break overflow-scroll" style="max-height: 30rem;">{{ article.content }}</p>
+                    <p class="fw-bold fs-3">{{ article.price }} €</p>
+                    {% comment %} <a href="{% url 'article_detail' article.id %}" class="btn btn-primary">Je suis intéressé(e)</a> {% endcomment %}
+                    <!-- Button trigger modal -->
+                    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#interestModal">
+                        Je suis intéressé(e)
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="d-flex justify-content-center align-items-center">
+        {% if next_article %}
+            <a href="{% url 'article_detail' next_article.id %}">
+                <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" fill="currentColor" class="bi bi-arrow-right-circle" viewBox="0 0 16 16">
+                    <path fill-rule="evenodd" d="M1 8a7 7 0 1 0 14 0A7 7 0 0 0 1 8m15 0A8 8 0 1 1 0 8a8 8 0 0 1 16 0M4.5 7.5a.5.5 0 0 0 0 1h5.793l-2.147 2.146a.5.5 0 0 0 .708.708l3-3a.5.5 0 0 0 0-.708l-3-3a.5.5 0 1 0-.708.708L10.293 7.5z"/>
+                </svg>
+            </a>
+        {% endif %}
+    </div>
+</div>
 
-    {% for image in article.images.all %}
-        <img src="{{ image.image.url }}" alt="{{ article.title }}" style="max-width: 400px;">
-    {% endfor %}
+<!-- Modal mail -->
+<div class="modal fade" id="interestModal" tabindex="-1" aria-labelledby="interestModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h1 class="modal-title fs-5" id="articleModalLabel">Cet article m'intéresse</h1>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+            <div class="mb-3">
+                <form class="was-validated">
+                    <label for="mailInput" class="form-label">Adresse e-mail</label>
+                    <input type="email" class="form-control" id="mailInput" placeholder="name@example.com" required>
+                    <div class="invalid-feedback">
+                    Veuillez introduire votre adresse e-mail.
+                    </div>
+                    <div class="mt-2">
+                        <label for="articleInput" class="form-label"> Article </label>
+                        <select class="form-select" id="articleInput" aria-label="Disabled select example" disabled>
+                            <option selected>Open this select menu</option>
+                            <option value="1">One</option>
+                            <option value="2">Two</option>
+                            <option value="3">Three</option>
+                        </select>
+                    </div>
+                </form>
+              </div>
+              <div class="mb-3">
+                <label for="FormControlTextarea" class="form-label">Message</label>
+                <textarea class="form-control" id="FormControlTextarea" rows="3"></textarea>
+              </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fermer</button>
+          <button type="button" class="btn btn-primary" id="toastSuccessBtn" data-bs-dismiss="modal">Envoyer</button>
+        </div>
+      </div>
+    </div>
+</div>
 
-    <a href="{% url 'article_list' %}">Retour à la liste</a>
+<!-- Toast -->
+<div class="toast-container position-fixed bottom-0 end-0 p-3">
+    <div id="toastSuccess" class="toast align-items-center text-bg-success border-0" role="alert" aria-live="assertive" aria-atomic="true">
+        <div class="d-flex">
+        <div class="toast-body">
+            Votre e-mail a bien été envoyé ! Nous vous recontacterons dans les plus brefs délais.
+        </div>
+        <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
+        </div>
+    </div>
+</div>
+
 {% endblock %}

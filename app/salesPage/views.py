@@ -10,7 +10,15 @@ def article_list(request):
 
 def article_detail(request, article_id):
     article = get_object_or_404(Article, id=article_id)
-    return render(request, 'articles/article_detail.html', {'article': article})
+    
+    prev_article = Article.objects.filter(id__lt=article.id).order_by('-id').first()
+    next_article = Article.objects.filter(id__gt=article.id).order_by('id').first()
+
+    return render(request, 'articles/article_detail.html', {
+        'article': article,
+        'prev_article': prev_article,
+        'next_article': next_article,
+    })
 
 
 def article_delete(request, article_id):
