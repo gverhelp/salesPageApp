@@ -1,0 +1,34 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %} Me contacter {% endblock %}
+
+{% block content %}
+
+<div class="container d-flex justify-content-center align-items-center my-3">
+    <div class="card shadow-lg w-100" style="max-width: 600px;">
+        <img src="{% static 'img/profile_pic.jpg' %}" class="card-img-top w-100" style="height: 30rem; object-fit: cover;" alt="Image de contact">
+        <div class="card-body text-center">
+            <h2 class="card-title">Me contacter</h2>
+            <p class="card-text text-muted">N'hésitez pas à me joindre via l'un des moyens ci-dessous.</p>
+        </div>
+        <ul class="list-group list-group-flush">
+            <li class="list-group-item">
+                <strong>📞 Téléphone :</strong> +32 4 12 34 56 78
+            </li>
+            <li class="list-group-item">
+                <strong>✉️ Email :</strong> example@example.com
+            </li>
+            <li class="list-group-item">
+                <strong>🔗 LinkedIn :</strong> <a href="#" class="text-decoration-none">linkedin.com/in/exemple</a>
+            </li>
+            <li class="list-group-item">
+                <strong>🐦 Twitter :</strong> <a href="#" class="text-decoration-none">@exemple</a>
+            </li>
+        </ul>
+        <div class="card-body text-center">
+            <a href="mailto:example@example.com" class="btn btn-primary">Envoyer un email</a>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

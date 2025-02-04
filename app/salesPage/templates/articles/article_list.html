@@ -6,12 +6,12 @@
     Mes articles en vente
 </h1>
 
-<div class="row">
+<div class="row g-4">
     {% for article in articles %}
-        <div class="col d-flex align-items-center justify-content-center pb-4">
+        <div class="col d-flex align-items-center justify-content-center">
             <div class="card shadow-sm overflow-hidden" style="width: 25rem;">
                 {% if article.images.all %}
-                    <div id="carousel{{ article.id }}" class="carousel slide" data-bs-ride="carousel" data-bs-interval="3000" data-bs-pause="hover">
+                    <div id="carousel{{ article.id }}" class="carousel slide" data-bs-ride="carousel" data-bs-interval="5000" data-bs-pause="hover">
                         <div class="carousel-indicators">
                             {% if article.images.all.count > 1 %}
                             {% for image in article.images.all %}
@@ -42,7 +42,7 @@
                 {% endif %}
                 <div class="card-body">
                     <h5 class="card-title text-break">{{ article.title }}</h5>
-                    <p class="card-text text-break overflow-hidden" style="height: 3rem;">{{ article.content }}</p>
+                    {% comment %} <p class="card-text text-break overflow-hidden" style="height: 3rem;">{{ article.content }}</p> {% endcomment %}
                     <p class="fw-bold">{{ article.price }} €</p>
                     <a href="{% url 'article_detail' article.id %}" class="btn btn-primary">Voir plus</a>
                 </div>

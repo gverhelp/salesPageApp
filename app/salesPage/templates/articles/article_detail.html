@@ -22,7 +22,7 @@
         <div class="row g-0">
           <div class="col-md-8 border-end">
             {% if article.images.all %}
-            <div id="carousel{{ article.id }}" class="carousel slide" data-bs-ride="carousel" data-bs-interval="3000" data-bs-pause="hover">
+            <div id="carousel{{ article.id }}" class="carousel slide" data-bs-ride="carousel" data-bs-interval="5000" data-bs-pause="hover">
                 <div class="carousel-indicators">
                     {% if article.images.all.count > 1 %}
                     {% for image in article.images.all %}
@@ -77,52 +77,77 @@
     </div>
 </div>
 
-<!-- Modal mail -->
+<!-- Modal -->
 <div class="modal fade" id="interestModal" tabindex="-1" aria-labelledby="interestModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h1 class="modal-title fs-5" id="articleModalLabel">Cet article m'intéresse</h1>
-          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-        </div>
-        <div class="modal-body">
-            <div class="mb-3">
-                <form class="was-validated">
-                    <label for="mailInput" class="form-label">Adresse e-mail</label>
-                    <input type="email" class="form-control" id="mailInput" placeholder="name@example.com" required>
-                    <div class="invalid-feedback">
-                    Veuillez introduire votre adresse e-mail.
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="articleModalLabel">Cet article m'intéresse</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+
+                <div class="text-center mb-4">
+                    <h4 class="mb-3">Contactez-moi directement :</h4>
+                    <p class="fw-bold mb-1">+33 6 12 34 56 78</p>
+                    <p class="fw-bold">example@example.com</p>
+                </div>
+
+                <div class="d-flex align-items-center mb-3">
+                    <hr class="flex-grow-1">
+                    <span class="mx-3 fw-bold text-muted">OU</span>
+                    <hr class="flex-grow-1">
+                </div>
+
+                <div>
+                    <h4 class="text-center mb-3">Remplissez ce formulaire et je vous contacterai dès que possible</h4>
+                    <form>
+                        <div class="mb-3">
+                            <label for="mailInput" class="form-label">Adresse e-mail</label>
+                            <input type="email" class="form-control" id="mailInput" placeholder="votre.adresse@example.com" required>
+                            <div class="invalid-feedback">
+                                Veuillez introduire une adresse e-mail valide.
+                            </div>
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="phoneInput" class="form-label">Numéro de téléphone</label>
+                            <input type="tel" class="form-control" id="phoneInput" placeholder="+32 4 12 34 56 78" required>
+                            <div class="invalid-feedback">
+                                Veuillez introduire un numéro de téléphone valide.
+                            </div>
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="articleInput" class="form-label">Article</label>
+                            <select class="form-select" id="articleInput" aria-label="Disabled select example" disabled>
+                                <option selected>{{ article.title }}</option>
+                            </select>
+                        </div>
+                    </form>
+
+                    <div class="mb-3">
+                        <label for="FormControlTextarea" class="form-label">Message</label>
+                        <textarea class="form-control" id="FormControlTextarea" rows="3"></textarea>
                     </div>
-                    <div class="mt-2">
-                        <label for="articleInput" class="form-label"> Article </label>
-                        <select class="form-select" id="articleInput" aria-label="Disabled select example" disabled>
-                            <option selected>Open this select menu</option>
-                            <option value="1">One</option>
-                            <option value="2">Two</option>
-                            <option value="3">Three</option>
-                        </select>
-                    </div>
-                </form>
-              </div>
-              <div class="mb-3">
-                <label for="FormControlTextarea" class="form-label">Message</label>
-                <textarea class="form-control" id="FormControlTextarea" rows="3"></textarea>
-              </div>
+                </div>
+            </div>
+
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fermer</button>
+                <button type="button" class="btn btn-primary" id="toastSuccessBtn">Envoyer</button>
+            </div>
         </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fermer</button>
-          <button type="button" class="btn btn-primary" id="toastSuccessBtn" data-bs-dismiss="modal">Envoyer</button>
-        </div>
-      </div>
     </div>
 </div>
+
 
 <!-- Toast -->
 <div class="toast-container position-fixed bottom-0 end-0 p-3">
     <div id="toastSuccess" class="toast align-items-center text-bg-success border-0" role="alert" aria-live="assertive" aria-atomic="true">
         <div class="d-flex">
         <div class="toast-body">
-            Votre e-mail a bien été envoyé ! Nous vous recontacterons dans les plus brefs délais.
+            Votre message a bien été envoyé ! Nous vous recontacterons dans les plus brefs délais.
         </div>
         <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
         </div>

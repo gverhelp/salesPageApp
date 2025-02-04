@@ -3,6 +3,9 @@ from .models import Article, ArticleImage
 from .forms import ArticleForm
 
 # Create your views here.
+def contact_me(request):
+    return render(request, 'contact/contact_me.html')
+
 def article_list(request):
     articles = Article.objects.all()
     return render(request, 'articles/article_list.html', {'articles': articles})

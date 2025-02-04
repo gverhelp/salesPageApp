@@ -17,7 +17,7 @@ Including another URLconf
 from django.conf import settings
 from django.conf.urls.static import static
 from django.urls import path
-from salesPage.views import article_list, article_detail, article_delete, article_update, article_create
+from salesPage.views import article_list, article_detail, article_delete, article_update, article_create, contact_me
 
 urlpatterns = [
     path('', article_list),
@@ -26,4 +26,5 @@ urlpatterns = [
     path('articles/<int:article_id>/delete/', article_delete, name='article_delete'),
     path('articles/<int:article_id>/update/', article_update, name='article_update'),
     path('articles/create/', article_create, name='article_create'),
+    path('me-contacter/', contact_me, name='contact_me'),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
