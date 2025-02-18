@@ -12,8 +12,8 @@ class ArticleImageAdmin(admin.ModelAdmin):
     list_display_links = ('id', 'article')
     
 class OrderAdmin(admin.ModelAdmin):
-    list_display = ('id', 'email', 'article')
-    list_display_links = ('id', 'email')
+    list_display = ('id', 'email', 'phone_number', 'article', 'created_at')
+    list_display_links = ('id', 'email', 'phone_number')
 
 admin.site.register(Article, ArticleAdmin)
 admin.site.register(ArticleImage, ArticleImageAdmin)

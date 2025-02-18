@@ -21,9 +21,11 @@ class ArticleImage(models.Model):
     
     
 class Order(models.Model):
-    email = models.EmailField()
-    message = models.TextField()
+    email = models.EmailField(blank=True, null=True)
+    phone_number = models.CharField(max_length=15, blank=True, null=True)
+    message = models.TextField(blank=True, null=True)
     article = models.ForeignKey(Article, on_delete=models.CASCADE)
-    
+    created_at = models.DateTimeField(auto_now_add=True)
+
     def __str__(self):
-        return f"Commande de {self.article.title} par {self.email}"
+        return f"Commande de {self.article.title} par {self.email or self.phone_number}"

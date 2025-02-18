@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+
+{% block title %} Admin dashboard {% endblock %}
+
+{% block content %}
+
+<form method="POST" action="{% url 'admin_logout' %}">
+    {% csrf_token %}
+    <button type="submit" class="btn btn-danger">Déconnexion</button>
+</form>
+
+<div> Hello world </div>
+
+{% endblock %}
