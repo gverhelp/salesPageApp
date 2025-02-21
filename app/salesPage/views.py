@@ -75,58 +75,63 @@ def admin_logout(request):
 @login_required(login_url='/admin-login/')
 @user_passes_test(admin_required, login_url='/admin-login/')
 def admin_dashboard(request):
-    return render(request, "admin/admin_dashboard.html")
-
-
-# def article_delete(request, article_id):
+    articles = Article.objects.all()
+    orders = Order.objects.all()
     
-#     article = get_object_or_404(Article, id=article_id)
-    
-#     if request.method == 'POST':
-#         article.delete()
-#         return redirect('article_list')
-    
-#     return render(request, 'articles/article_delete.html', {'article': article})
+    return render(request, "admin/admin_dashboard.html", {'articles': articles, 'orders': orders})
 
 
-# def article_update(request, article_id):
-    
-#     article = get_object_or_404(Article, id=article_id)
-#     # images = article.images.all()
-    
-#     if request.method == 'POST':
-#         form = ArticleForm(request.POST, request.FILES, instance=article)
-        
-#         files = request.FILES.getlist('image')
-        
-#         if form.is_valid():
-#             form.save()
-            
-#             for file in files:
-#                 ArticleImage.objects.create(article=article, image=file)
-                
-#             return redirect('article_detail', article_id=article.id)
-#     else:
-#         form = ArticleForm(instance=article)
+@login_required(login_url='/admin-login/')
+@user_passes_test(admin_required, login_url='/admin-login/')
+def add_article(request):
+    if request.method == 'POST':
+        form = ArticleForm(request.POST)
+        files = request.FILES.getlist('images')
 
-#     return render(request, 'articles/article_update.html', {'form': form, 'article': article})
+        if form.is_valid():
+            article = form.save()
+            for file in files:
+                ArticleImage.objects.create(article=article, image=file)
+            return redirect('admin_dashboard')
+    else:
+        form = ArticleForm()
+    return render(request, 'admin/add_article.html', {'form': form})
 
 
-# def article_create(request):
-#     if request.method == 'POST':
-#         article_form = ArticleForm(request.POST)
+@login_required(login_url='/admin-login/')
+@user_passes_test(admin_required, login_url='/admin-login/')
+def edit_article(request, article_id):
+    article = get_object_or_404(Article, id=article_id)
+    images = article.images.all()
 
-#         files = request.FILES.getlist('image')
+    if request.method == 'POST':
+        form = ArticleForm(request.POST, instance=article)
+        files = request.FILES.getlist('images')
 
-#         if article_form.is_valid():
-#             article = article_form.save()
+        if form.is_valid():
+            form.save()
+            for file in files:
+                ArticleImage.objects.create(article=article, image=file)
+            return redirect('admin_dashboard')
 
-#             for file in files:
-#                 ArticleImage.objects.create(article=article, image=file)
+    else:
+        form = ArticleForm(instance=article)
 
-#             return redirect('article_list')  # Rediriger vers la liste des articles
+    return render(request, 'admin/edit_article.html', {'form': form, 'article': article, 'images': images})
 
-#     else:
-#         article_form = ArticleForm()
 
-#     return render(request, 'articles/article_create.html', {'article_form': article_form})
+@login_required(login_url='/admin-login/')
+@user_passes_test(admin_required, login_url='/admin-login/')
+def delete_article(request, article_id):
+    article = get_object_or_404(Article, id=article_id)
+    article.delete()
+    return redirect('admin_dashboard')
+
+
+@login_required(login_url='/admin-login/')
+@user_passes_test(admin_required, login_url='/admin-login/')
+def delete_image(request, image_id):
+    image = get_object_or_404(ArticleImage, id=image_id)
+    article_id = image.article.id  # On récupère l'ID de l'article associé
+    image.delete()  # Suppression de l'image
+    return redirect('edit_article', article_id=article_id) 

@@ -17,17 +17,21 @@ Including another URLconf
 from django.conf import settings
 from django.conf.urls.static import static
 from django.urls import path
-from salesPage.views import article_list, article_detail, contact_me, admin_login, admin_dashboard, admin_logout
+from salesPage.views import article_list, article_detail, contact_me, admin_login, admin_dashboard, admin_logout, edit_article, delete_article, add_article, delete_image
 
 urlpatterns = [
     path('', article_list),
     path('articles/', article_list, name='article_list'),
     path('articles/<int:article_id>/', article_detail, name='article_detail'),
-    # path('articles/<int:article_id>/delete/', article_delete, name='article_delete'),
-    # path('articles/<int:article_id>/update/', article_update, name='article_update'),
-    # path('articles/create/', article_create, name='article_create'),
     path('me-contacter/', contact_me, name='contact_me'),
+    
     path('admin-login/', admin_login, name='admin_login'),
     path('admin-dashboard/', admin_dashboard, name='admin_dashboard'),
     path('admin-logout/', admin_logout, name='admin_logout'),
+    
+    path('add-article/', add_article, name='add_article'),
+    path('edit-article/<int:article_id>/', edit_article, name='edit_article'),
+    path('delete-article/<int:article_id>/', delete_article, name='delete_article'),
+    path('delete-image/<int:image_id>/', delete_image, name='delete_image'),
+    
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

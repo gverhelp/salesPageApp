@@ -1,14 +1,83 @@
 {% extends 'base.html' %}
 
-{% block title %} Admin dashboard {% endblock %}
+{% block title %}Admin Dashboard{% endblock %}
 
 {% block content %}
+<div class="container mt-2">
+    <!-- Bouton Déconnexion -->
+    <form method="POST" action="{% url 'admin_logout' %}" class="mb-3">
+        {% csrf_token %}
+        <button type="submit" class="btn btn-danger">Déconnexion</button>
+    </form>
 
-<form method="POST" action="{% url 'admin_logout' %}">
-    {% csrf_token %}
-    <button type="submit" class="btn btn-danger">Déconnexion</button>
-</form>
+    <h2 class="mb-4 text-center">Admin Dashboard</h2>
 
-<div> Hello world </div>
+    <!-- Bouton pour ajouter un article -->
+    <div class="d-flex justify-content-end mb-3">
+    <a href="{% url 'add_article' %}" class="btn btn-success">➕ Ajouter un article</a>
+    </div>
+    <!-- SECTION COMMANDES -->
+    <div class="card mb-4">
+        <div class="card-header">
+            <h4 class="m-0">Commandes</h4>
+        </div>
+        <div class="card-body">
+            {% if orders %}
+                <ul class="list-group">
+                    {% for order in orders %}
+                        <li class="list-group-item">
+                            <div class="d-flex justify-content-between">
+                                <div>
+                                    <strong>Commande #{{ order.id }}</strong> - {{ order.phone_number }} | {{ order.email }}
+                                    <br>
+                                    <span class="badge bg-primary">{{ order.article.title }}</span>
+                                </div>
+                                <small class="text-muted">Créée le : {{ order.created_at }}</small>
+                            </div>
+                            {% if order.message %}
+                                <div class="mt-2 p-2 border rounded">
+                                    <strong>Message du client :</strong> {{ order.message }}
+                                </div>
+                            {% endif %}
+                        </li>
+                    {% endfor %}
+                </ul>
+            {% else %}
+                <p>Aucune commande pour le moment.</p>
+            {% endif %}
+        </div>
+    </div>
 
+    <!-- SECTION ARTICLES -->
+    <div class="card">
+        <div class="card-header">
+            <h4 class="m-0">Articles</h4>
+        </div>
+        <div class="card-body">
+            {% if articles %}
+                <ul class="list-group">
+                    {% for article in articles %}
+                        <li class="list-group-item d-flex justify-content-between align-items-center">
+                            <div>
+                                <strong>{{ article.title }}</strong> - {{ article.price }} €
+                                <br>
+                                <small>Créé le : {{ article.created_at }}</small>
+                            </div>
+                            <div>
+                                <a href="{% url 'edit_article' article.id %}" class="btn btn-warning btn-sm">Modifier</a>
+                                <form method="POST" action="{% url 'delete_article' article.id %}" class="d-inline">
+                                    {% csrf_token %}
+                                    <button type="submit" class="btn btn-danger btn-sm">Supprimer</button>
+                                </form>
+                            </div>
+                        </li>
+                    {% endfor %}
+                </ul>
+            {% else %}
+                <p>Aucun article pour le moment.</p>
+            {% endif %}
+        </div>
+    </div>
+</div>
 {% endblock %}
+

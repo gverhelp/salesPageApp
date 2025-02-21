@@ -1,0 +1,46 @@
+{% extends 'base.html' %}
+
+{% block title %}Modifier l'article{% endblock %}
+
+{% block content %}
+<div class="container mt-5">
+    <div class="card shadow-lg p-4">
+        <h2 class="text-center mb-4">Modifier l'article</h2>
+        <form method="POST" enctype="multipart/form-data">
+            {% csrf_token %}
+
+            <div class="mb-4">
+                {{ form.as_p }}
+            </div>
+
+            <h4 class="mb-3">Images existantes :</h4>
+            <div class="row">
+                {% for image in images %}
+                    <div class="col-md-3 col-sm-6 mb-3">
+                        <div class="card shadow-sm">
+                            <img src="{{ image.image.url }}" class="card-img-top" style="height: 150px; object-fit: cover;">
+                            <div class="card-body text-center">
+                                <a href="{% url 'delete_image' image.id %}" class="btn btn-danger btn-sm"
+                                   onclick="return confirm('Voulez-vous vraiment supprimer cette image ?');">Supprimer</a>
+                            </div>
+                        </div>
+                    </div>
+                {% empty %}
+                    <p class="text-muted">Aucune image pour cet article.</p>
+                {% endfor %}
+            </div>
+
+            <div class="mb-3">
+                <label class="form-label fw-bold">Ajouter de nouvelles images :</label>
+                <input type="file" name="images" multiple class="form-control">
+            </div>
+
+            <div class="d-flex justify-content-between mt-4">
+                <a href="{% url 'admin_dashboard' %}" class="btn btn-secondary">Annuler</a>
+                <button type="submit" class="btn btn-primary">Enregistrer</button>
+            </div>
+        </form>
+    </div>
+</div>
+{% endblock %}
+
