@@ -67,7 +67,7 @@
                                 <small>Créé le : {{ article.created_at }}</small>
                             </div>
                             <div>
-                                <a href="{% url 'edit_article' article.id %}" class="btn btn-warning btn-sm">Modifier</a>
+                                <a href="{% url 'edit_article' article.id %}" class="btn btn-warning btn-sm me-2">Modifier</a>
                                 <form method="POST" action="{% url 'delete_article' article.id %}" class="d-inline">
                                     {% csrf_token %}
                                     <button type="submit" class="btn btn-danger btn-sm">Supprimer</button>

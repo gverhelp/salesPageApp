@@ -6,7 +6,3 @@ class ArticleForm(forms.ModelForm):
         model = Article
         fields = ['title', 'content', 'price']
 
-class ArticleImageForm(forms.ModelForm):
-    class Meta:
-        model = ArticleImage
-        fields = ['image']
