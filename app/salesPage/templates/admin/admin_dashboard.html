@@ -4,13 +4,13 @@
 
 {% block content %}
 <div class="container mt-2">
-    <!-- Bouton Déconnexion -->
+    {% comment %} <!-- Bouton Déconnexion -->
      <div class="d-flex justify-content-end mb-3">
         <form method="POST" action="{% url 'admin_logout' %}">
             {% csrf_token %}
             <button type="submit" class="btn btn-danger">Déconnexion</button>
         </form>
-    </div>
+    </div> {% endcomment %}
 
     <h2 class="mb-4 text-center">Admin Dashboard</h2>
 

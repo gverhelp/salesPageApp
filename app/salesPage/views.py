@@ -65,10 +65,10 @@ def admin_login(request):
 
 def admin_logout(request):
     logout(request)
-    return redirect("/admin-login/")
+    return redirect("/articles/")
 
 
-@login_required(login_url='/admin-login/')
+@login_required()
 def admin_dashboard(request):
     articles = Article.objects.all()
     orders = Order.objects.all()
@@ -76,7 +76,7 @@ def admin_dashboard(request):
     return render(request, "admin/admin_dashboard.html", {'articles': articles, 'orders': orders})
 
 
-@login_required(login_url='/admin-login/')
+@login_required()
 def add_article(request):
     if request.method == 'POST':
         form = ArticleForm(request.POST)
@@ -92,7 +92,7 @@ def add_article(request):
     return render(request, 'admin/add_article.html', {'form': form})
 
 
-@login_required(login_url='/admin-login/')
+@login_required()
 def edit_article(request, article_id):
     article = get_object_or_404(Article, id=article_id)
     images = article.images.all()
@@ -113,14 +113,14 @@ def edit_article(request, article_id):
     return render(request, 'admin/edit_article.html', {'form': form, 'article': article, 'images': images})
 
 
-@login_required(login_url='/admin-login/')
+@login_required()
 def delete_article(request, article_id):
     article = get_object_or_404(Article, id=article_id)
     article.delete()
     return redirect('admin_dashboard')
 
 
-@login_required(login_url='/admin-login/')
+@login_required()
 def delete_image(request, image_id):
     image = get_object_or_404(ArticleImage, id=image_id)
     article_id = image.article.id
@@ -128,7 +128,7 @@ def delete_image(request, image_id):
     return redirect('edit_article', article_id=article_id) 
 
 
-@login_required(login_url='/admin-login/')
+@login_required()
 def delete_order(request, order_id):
     order = get_object_or_404(Order, id=order_id)
     order.delete()

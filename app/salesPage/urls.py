@@ -26,8 +26,8 @@ urlpatterns = [
     path('me-contacter/', contact_me, name='contact_me'),
     
     path('admin-login/', admin_login, name='admin_login'),
-    path('admin-dashboard/', admin_dashboard, name='admin_dashboard'),
     path('admin-logout/', admin_logout, name='admin_logout'),
+    path('admin-dashboard/', admin_dashboard, name='admin_dashboard'),
     
     path('add-article/', add_article, name='add_article'),
     path('edit-article/<int:article_id>/', edit_article, name='edit_article'),
