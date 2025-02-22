@@ -5,17 +5,15 @@
 {% block content %}
 <div class="container mt-2">
     <!-- Bouton Déconnexion -->
-    <form method="POST" action="{% url 'admin_logout' %}" class="mb-3">
-        {% csrf_token %}
-        <button type="submit" class="btn btn-danger">Déconnexion</button>
-    </form>
+     <div class="d-flex justify-content-end mb-3">
+        <form method="POST" action="{% url 'admin_logout' %}">
+            {% csrf_token %}
+            <button type="submit" class="btn btn-danger">Déconnexion</button>
+        </form>
+    </div>
 
     <h2 class="mb-4 text-center">Admin Dashboard</h2>
 
-    <!-- Bouton pour ajouter un article -->
-    <div class="d-flex justify-content-end mb-3">
-    <a href="{% url 'add_article' %}" class="btn btn-success">➕ Ajouter un article</a>
-    </div>
     <!-- SECTION COMMANDES -->
     <div class="card mb-4">
         <div class="card-header">
@@ -29,16 +27,19 @@
                             <div class="d-flex justify-content-between">
                                 <div>
                                     <strong>Commande #{{ order.id }}</strong> - {{ order.phone_number }} | {{ order.email }}
-                                    <br>
-                                    <span class="badge bg-primary">{{ order.article.title }}</span>
                                 </div>
                                 <small class="text-muted">Créée le : {{ order.created_at }}</small>
                             </div>
+                            <span class="badge bg-primary">{{ order.article.title }}</span>
                             {% if order.message %}
                                 <div class="mt-2 p-2 border rounded">
                                     <strong>Message du client :</strong> {{ order.message }}
                                 </div>
                             {% endif %}
+                            <form method="POST" action="{% url 'delete_order' order.id %}" class="d-flex justify-content-end mt-2">
+                                {% csrf_token %}
+                                <button type="submit" class="btn btn-danger btn-sm">Supprimer</button>
+                            </form>
                         </li>
                     {% endfor %}
                 </ul>
@@ -49,6 +50,8 @@
     </div>
 
     <!-- SECTION ARTICLES -->
+         <!-- Bouton pour ajouter un article -->
+    <a href="{% url 'add_article' %}" class="btn btn-success mb-3">+ Ajouter un article</a>
     <div class="card">
         <div class="card-header">
             <h4 class="m-0">Articles</h4>

@@ -47,10 +47,6 @@ def article_detail(request, article_id):
     })
 
 
-def admin_required(user):
-    return user.is_authenticated and user.is_superuser
-
-
 def admin_login(request):
     if request.method == 'POST':
         username = request.POST.get('username')
@@ -58,7 +54,7 @@ def admin_login(request):
         
         user = authenticate(request, username=username, password=password)
 
-        if user is not None and user.is_superuser:
+        if user:
             login(request, user)
             return redirect('/admin-dashboard/')
         else:
@@ -73,7 +69,6 @@ def admin_logout(request):
 
 
 @login_required(login_url='/admin-login/')
-@user_passes_test(admin_required, login_url='/admin-login/')
 def admin_dashboard(request):
     articles = Article.objects.all()
     orders = Order.objects.all()
@@ -82,7 +77,6 @@ def admin_dashboard(request):
 
 
 @login_required(login_url='/admin-login/')
-@user_passes_test(admin_required, login_url='/admin-login/')
 def add_article(request):
     if request.method == 'POST':
         form = ArticleForm(request.POST)
@@ -99,7 +93,6 @@ def add_article(request):
 
 
 @login_required(login_url='/admin-login/')
-@user_passes_test(admin_required, login_url='/admin-login/')
 def edit_article(request, article_id):
     article = get_object_or_404(Article, id=article_id)
     images = article.images.all()
@@ -121,7 +114,6 @@ def edit_article(request, article_id):
 
 
 @login_required(login_url='/admin-login/')
-@user_passes_test(admin_required, login_url='/admin-login/')
 def delete_article(request, article_id):
     article = get_object_or_404(Article, id=article_id)
     article.delete()
@@ -129,9 +121,15 @@ def delete_article(request, article_id):
 
 
 @login_required(login_url='/admin-login/')
-@user_passes_test(admin_required, login_url='/admin-login/')
 def delete_image(request, image_id):
     image = get_object_or_404(ArticleImage, id=image_id)
-    article_id = image.article.id  # On récupère l'ID de l'article associé
-    image.delete()  # Suppression de l'image
+    article_id = image.article.id
+    image.delete()
     return redirect('edit_article', article_id=article_id) 
+
+
+@login_required(login_url='/admin-login/')
+def delete_order(request, order_id):
+    order = get_object_or_404(Order, id=order_id)
+    order.delete()
+    return redirect('admin_dashboard')
