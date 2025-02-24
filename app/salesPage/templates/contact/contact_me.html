@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %} Me contacter {% endblock %}
+
+{% block content %}
+
+<div class="container d-flex justify-content-center align-items-center my-3">
+    <div class="card shadow-lg w-100" style="max-width: 600px;">
+        <img src="{% static 'img/profile_pic.jpg' %}" class="card-img-top w-100" style="height: 30rem; object-fit: cover;" alt="Image de contact">
+        <div class="card-body text-center">
+            <h2 class="card-title">Me contacter</h2>
+            <p class="card-text text-muted">N'hésitez pas à me joindre via l'un des moyens ci-dessous.</p>
+        </div>
+        <ul class="list-group list-group-flush">
+            <li class="list-group-item">
+                <strong>📞 Téléphone :</strong> +32 473 74 75 97
+            </li>
+            <li class="list-group-item">
+                <strong>✉️ Email :</strong> patrick.verhelpen@gmail.com
+            </li>
+        </ul>
+        <div class="card-body text-center">
+            <a href="mailto:patrick.verhelpen@gmail.com" class="btn btn-primary">Envoyer un email</a>
+        </div>
+    </div>
+</div>
+
+{% endblock %}
