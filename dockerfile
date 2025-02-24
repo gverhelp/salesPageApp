@@ -1,5 +1,5 @@
 # Dockerfile pour Django
-FROM python:3.13
+FROM python:3.13-slim
 
 # Définir le répertoire de travail
 WORKDIR /usr/src/salesPageApp
