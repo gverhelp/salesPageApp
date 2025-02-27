@@ -1,6 +1,21 @@
 #!/bin/sh
+
+if [ "$DATABASE" = "postgres" ]
+then
+    echo "Waiting for postgres..."
+
+    while ! nc -z $SQL_HOST $SQL_PORT; do
+      sleep 0.1
+    done
+
+    echo "PostgreSQL started"
+fi
+
 # Collecter les fichiers statiques
 # pipenv run python manage.py collectstatic --no-input
+
+# Vider la base de données
+# pipenv run python manage.py flush --no-input
 
 # Appliquer les migrations
 pipenv run python manage.py migrate
@@ -13,7 +28,6 @@ then
     --username $DJANGO_SUPERUSER_USERNAME \
     --email $DJANGO_SUPERUSER_EMAIL
 
-    # Définir le mot de passe du superutilisateur via une commande Django
     echo "from django.contrib.auth.models import User; user = User.objects.get(username='$DJANGO_SUPERUSER_USERNAME'); user.set_password('$DJANGO_SUPERUSER_PASSWORD'); user.save()" | pipenv run python manage.py shell
 else
     echo "Superuser not created because required environment variables are not set."
