@@ -8,7 +8,6 @@ WORKDIR /usr/src/salesPageApp
 COPY ./app ./app
 COPY Pipfile .
 COPY Pipfile.lock .
-COPY .env .
 
 # Set environment variables
 ENV PYTHONDONTWRITEBYTECODE 1
@@ -23,14 +22,12 @@ COPY ./entrypoint.sh .
 RUN sed -i 's/\r$//g' /usr/src/salesPageApp/entrypoint.sh
 RUN chmod +x /usr/src/salesPageApp/entrypoint.sh
 
+RUN mkdir /usr/src/salesPageApp/app/staticfiles
+RUN mkdir /usr/src/salesPageApp/app/mediafiles
+
 WORKDIR /usr/src/salesPageApp/app
 
 # Exposer le port 8000
 EXPOSE 8000
 
-ENTRYPOINT ["sh", "/usr/src/salesPageApp/entrypoint.sh"]
-
-# Lancer l'application
-# CMD ["pipenv", "run", "gunicorn", "salesPageApp.wsgi:application", "--bind", "0.0.0.0:8000"]
-# CMD ["pipenv", "run", "python", "manage.py", "runserver", "0.0.0.0:8000"]
-
+ENTRYPOINT ["/usr/src/salesPageApp/entrypoint.sh"]

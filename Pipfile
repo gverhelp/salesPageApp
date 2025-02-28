@@ -9,6 +9,7 @@ pillow = "*"
 django-bootstrap5 = "*"
 python-dotenv = "*"
 psycopg2-binary = "*"
+gunicorn = "*"
 
 [dev-packages]
 
