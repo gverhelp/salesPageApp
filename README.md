@@ -88,15 +88,11 @@ docker-compose down -v
 
 ## 📌 Stack Utilisée
 - **Django** - Framework backend
+- **Bootstrap** - Framework CSS
 - **Gunicorn** - Serveur d'application WSGI
 - **PostgreSQL** - Base de données
 - **Docker & Docker Compose** - Conteneurisation
 - **Nginx** - Proxy inverse pour la production
-
----
-
-## 📜 Licence
-Ce projet est sous licence MIT. Voir le fichier [LICENSE](LICENSE) pour plus d’informations.
 
 ---
 
