@@ -31,7 +31,7 @@ services:
       - static_volume:/usr/src/salesPageApp/app/staticfiles
       - media_volume:/usr/src/salesPageApp/app/mediafiles
     ports:
-      - 1337:80
+      - 80:80
     depends_on:
       - web
 

@@ -1,6 +1,6 @@
 from django.shortcuts import render, get_object_or_404, redirect
 from django.contrib.auth import authenticate, login, logout
-from django.contrib.auth.decorators import login_required, user_passes_test
+from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from .models import Article, ArticleImage, Order
 from .forms import ArticleForm
@@ -11,7 +11,7 @@ def contact_me(request):
 
 
 def article_list(request):
-    articles = Article.objects.all()
+    articles = Article.objects.all().order_by("id")
     return render(request, 'articles/article_list.html', {'articles': articles})
 
 
@@ -70,8 +70,8 @@ def admin_logout(request):
 
 @login_required()
 def admin_dashboard(request):
-    articles = Article.objects.all()
-    orders = Order.objects.all()
+    articles = Article.objects.all().order_by("id")
+    orders = Order.objects.all().order_by("id")
     
     return render(request, "admin/admin_dashboard.html", {'articles': articles, 'orders': orders})
 
