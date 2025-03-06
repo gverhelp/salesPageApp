@@ -24,17 +24,29 @@ Assurez-vous d'avoir installé :
    - Copier le fichier `.env.example` et le renommer en `.env`.
    - Remplir les variables avec les bonnes valeurs.
 
-3. **Lancer l'application en mode développement** :
+3. **Dans `./app/core/settings.py`, décommente cette ligne** :
+```python
+ STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static')]
+```
+
+4. **Dans `./entrypoint.sh`, commente ces 2 lignes** :
+```sh
+ pipenv run python manage.py collectstatic --no-input --clear
+
+ cp -r /usr/src/salesPageApp/app/static/* /usr/src/salesPageApp/app/staticfiles
+```
+
+5. **Lancer l'application en mode développement** :
 ```sh
  docker-compose up --build
 ```
 
-4. **Accéder à l'application** :
+6. **Accéder à l'application** :
    - Django : `http://127.0.0.1:8000`
    - Admin Panel : `http://127.0.0.1:8000/admin`
    - Base de données PostgreSQL tourne sur `localhost:5432`.
 
-5. **Exécuter les migrations et créer un superutilisateur** :
+7. **Exécuter les migrations et créer un superutilisateur** :
 ```sh
 docker-compose exec web pipenv run python manage.py migrate
 docker-compose exec web pipenv run python manage.py createsuperuser
@@ -60,8 +72,8 @@ cp -r /usr/src/salesPageApp/app/static/* /usr/src/salesPageApp/app/staticfiles
 ```
 
 4. **Accéder à l'application** :
-   - Application : `http://127.0.0.1:1337`
-   - Admin Panel : `http://127.0.0.1:1337/admin`
+   - Application : `http://127.0.0.1:8000`
+   - Admin Panel : `http://127.0.0.1:8000/admin`
 
 ---
 
