@@ -46,12 +46,6 @@ Assurez-vous d'avoir installé :
    - Admin Panel : `http://127.0.0.1:8000/admin`
    - Base de données PostgreSQL tourne sur `localhost:5432`.
 
-7. **Exécuter les migrations et créer un superutilisateur** :
-```sh
-docker-compose exec web pipenv run python manage.py migrate
-docker-compose exec web pipenv run python manage.py createsuperuser
-```
-
 ---
 
 ## 🏗️ Lancement en Production
