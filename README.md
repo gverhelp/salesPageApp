@@ -8,7 +8,6 @@ SalesPageApp est une application web Django containerisée avec Docker et déplo
 Assurez-vous d'avoir installé :
 - [Docker](https://www.docker.com/)
 - [Docker Compose](https://docs.docker.com/compose/install/)
-- [Pipenv](https://pipenv.pypa.io/en/latest/)
 
 ---
 
