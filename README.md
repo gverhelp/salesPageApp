@@ -58,13 +58,7 @@ Assurez-vous d'avoir installé :
 docker-compose -f docker-compose.prod.yml up --build -d
 ```
 
-3. **Collecter les fichiers statiques** :
-    - Normalement, entrypoint.sh s'occupe de collecter mes fichiers static, mais ce dernier ne fonctionnant pas, j'ai dû copier coller manuellement mes fichiers avec :
-```sh
-cp -r /usr/src/salesPageApp/app/static/* /usr/src/salesPageApp/app/staticfiles
-```
-
-4. **Accéder à l'application** :
+3. **Accéder à l'application** :
    - Application : `http://127.0.0.1:8000`
    - Admin Panel : `http://127.0.0.1:8000/admin`
 
