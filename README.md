@@ -49,16 +49,22 @@ Assurez-vous d'avoir installé :
 
 ## 🏗️ Lancement en Production
 
-1. **Créer les fichiers d'environnement** :
+1. **Cloner le dépôt** :
+```sh
+ git clone https://github.com/ton-utilisateur/salespageapp.git
+ cd salespageapp
+```
+
+2. **Créer les fichiers d'environnement** :
    - Copier `.env.example` en `.env.prod` et `.env.prod.db`.
    - Remplir les valeurs correctement.
 
-2. **Construire et lancer les containers** :
+3. **Construire et lancer les containers** :
 ```sh
 docker-compose -f docker-compose.prod.yml up --build -d
 ```
 
-3. **Accéder à l'application** :
+4. **Accéder à l'application** :
    - Application : `http://127.0.0.1:8000`
    - Admin Panel : `http://127.0.0.1:8000/admin`
 

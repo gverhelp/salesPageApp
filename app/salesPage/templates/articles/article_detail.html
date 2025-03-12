@@ -30,10 +30,10 @@
                     {% endfor %}
                     {% endif %}
                 </div>
-                <div class="carousel-inner">
+                <div class="carousel-inner bg-black">
                     {% for image in actual_article.images.all %}
                         <div class="carousel-item {% if forloop.first %}active{% endif %}">
-                            <img src="{{ image.image.url }}" class="d-block w-100" style="height: 50rem; object-fit: cover;" alt="{{ actual_article.title }}">
+                            <img src="{{ image.image.url }}" class="d-block w-100 object-fit-contain" style="height: 40rem;" alt="{{ actual_article.title }}">
                         </div>
                     {% endfor %}
                 </div>
@@ -49,7 +49,7 @@
                 {% endif %}
             </div>
             {% else %}
-                <img src="https://placehold.co/300x400?text=No+image" class="d-block w-100" style="height: 50rem; object-fit: cover;" alt="Image par défaut">
+                <img src="https://placehold.co/300x400?text=No+image" class="d-block w-100 object-fit-cover" style="height: 40rem;" alt="Image par défaut">
             {% endif %}
             </div>
             <div class="col-md-4 d-flex align-items-center">
@@ -57,8 +57,6 @@
                     <h5 class="card-title text-break">{{ actual_article.title }}</h5>
                     <p class="card-text text-break overflow-scroll" style="max-height: 30rem;">{{ actual_article.content }}</p>
                     <p class="fw-bold fs-3">{{ actual_article.price }} €</p>
-                    {% comment %} <a href="{% url 'actual_article_detail' actual_article.id %}" class="btn btn-primary">Je suis intéressé(e)</a> {% endcomment %}
-                    <!-- Button trigger modal -->
                     <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#interestModal">
                         Je suis intéressé(e)
                     </button>
