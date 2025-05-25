@@ -30,8 +30,10 @@ services:
     volumes:
       - static_volume:/usr/src/salesPageApp/app/staticfiles
       - media_volume:/usr/src/salesPageApp/app/mediafiles
+      - /etc/letsencrypt:/etc/letsencrypt:ro
     ports:
       - 80:80
+      - 443:443
     depends_on:
       - web
 
